@@ -1,14 +1,26 @@
 [tool.poetry]
-name = "explainet"
+name = "xplainet"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
+tensorflow = "2.2.0"
+tensorflow-addons = "0.11.2"
+scikit-learn = "0.23.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "5.4.3"
+notebook = "6.0.3"
+ipywidgets = "7.5.1"
+requests = "2.23.0"
+matplotlib = "3.2.1"
+numpy = "1.18.5" 
+pandas = "1.0.4" 
+nb-black = "1.0.7"
+black = "19.10b0"
+jupyter_contrib_nbextensions = "0.5.1"
 
 [build-system]
 requires = ["poetry>=1"]

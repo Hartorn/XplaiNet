@@ -50,8 +50,8 @@ start-gpu: build-gpu ## Start docker container
 .PHONY: start-gpu
 
 install: build ## Install dependencies
-	$(DOCKER_RUN) 'cd XplaiNet && poetry install'
-	$(DOCKER_RUN) 'cd XplaiNet && poetry run jupyter contrib nbextension install --sys-prefix --symlink'
+	$(DOCKER_RUN) 'cd xplainet && poetry install'
+	$(DOCKER_RUN) 'cd xplainet && poetry run jupyter contrib nbextension install --sys-prefix --symlink'
 .PHONY: install
 
 lint: ## Check lint
@@ -59,7 +59,7 @@ lint: ## Check lint
 .PHONY: lint
 
 notebook: ## Start the Jupyter notebook
-	cd XplaiNet && poetry run jupyter notebook --allow-root --ip 0.0.0.0 --port ${PORT} --no-browser --notebook-dir .. --NotebookApp.token=''
+	cd xplainet && poetry run jupyter notebook --allow-root --ip 0.0.0.0 --port ${PORT} --no-browser --notebook-dir .. --NotebookApp.token=''
 .PHONY: notebook
 
 root_bash: ## Start a root bash inside the container

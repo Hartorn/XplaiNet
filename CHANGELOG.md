@@ -1,4 +1,8 @@
 
+## [0.1.1](https://github.com/Hartorn/XplaiNet/compare/v0.1.0...v0.1.1) (2020-09-19)
+
+
+
 # [0.1.0](https://github.com/Hartorn/XplaiNet/compare/396414e994135e039e39ae396b9ea0f5205bec29...v0.1.0) (2020-09-19)
 
 

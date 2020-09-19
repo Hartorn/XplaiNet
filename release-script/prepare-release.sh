@@ -8,7 +8,7 @@ echo ${version} | grep v && echo "Version should be x.y.z (for example, 1.1.1, 2
 
 localDir=`readlink -f .`
 releaseDir="${localDir}/release-${version}"
-rm -rf ${releaseDir}
+sudo rm -rf ${releaseDir}
 mkdir ${releaseDir}
 cd $releaseDir
 
@@ -39,4 +39,4 @@ git commit --amend --no-edit
 git push origin release/${version}
 
 cd ${localDir}
-rm -rf ${releaseDir}
+sudo rm -rf ${releaseDir}

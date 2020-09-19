@@ -32,7 +32,7 @@ echo "Building latest build"
 docker run --rm -v ${PWD}/xplainet:/work -w /work xplainet:latest poetry build
 
 echo "Merging into develop and main"
-git checkout master
+git checkout main
 git merge --no-ff origin/release/${version} -m "chore: release v${version} (merge)"
 git checkout develop
 git merge --no-ff origin/release/${version} -m "chore: release v${version} (merge)"

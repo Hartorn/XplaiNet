@@ -1,20 +1,40 @@
 {
-    "extends": [
-        "config:base",
-        ":pinAllExceptPeerDependencies",
-        "docker:enableMajor"
-        ],
-    "pinDigests": true,
-    "semanticCommits": true,
-    "semanticCommitType": "chore",
-    "prHourlyLimit": 0,
-    "prConcurrentLimit": 0,
-    "labels": ["dependencies"],
-    "baseBranches": ["develop"],
-    "major": {
-      "labels": ["dependencies", "dep:major"]
-    },
-    "minor": {
-      "labels": ["dependencies", "dep:minor"]
-    }
+  "extends": [
+    "config:base",
+    ":pinAllExceptPeerDependencies",
+    "docker:enableMajor"
+  ],
+  "pinDigests": true,
+  "semanticCommits": true,
+  "semanticCommitType": "chore",
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "labels": [
+    "dependencies"
+  ],
+  "baseBranches": [
+    "develop"
+  ],
+  "docker": {
+    "enabled": true,
+    "fileMatch": [
+      "Dockerfile",
+      "Dockerfile_gpu"
+    ]
+  },
+  "major": {
+    "labels": [
+      "dependencies",
+      "dep:major"
+    ]
+  },
+  "minor": {
+    "labels": [
+      "dependencies",
+      "dep:minor"
+    ]
+  },
+  "assignees": [
+    "Hartorn"
+  ]
 }

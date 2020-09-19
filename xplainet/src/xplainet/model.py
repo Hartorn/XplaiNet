@@ -64,7 +64,15 @@ def build_optimizer():
 
 
 def build_model(
-    params, lconv_dim=[], lconv_num_dim=[], activation=None, optimizer=None, emb_size=16, activation_num_first_layer=None
+    params,
+    lconv_dim=[],
+    lconv_num_dim=[],
+    activation=None,
+    optimizer=None,
+    emb_size=16,
+    activation_num_first_layer=None,
+    output_activation="sigmoid",
+    output_dim=1,
 ):
     if optimizer is None:
         optimizer = build_optimizer()
@@ -128,8 +136,8 @@ def build_model(
 
         x_layer = Embedding(
             params["max_nb"] + 1,
-            emb_size, #int(min(np.log2(params["max_nb"] + 1), 50)),
-            #int(min((params["max_nb"] + 1) / 2, 50)),
+            emb_size,  # int(min(np.log2(params["max_nb"] + 1), 50)),
+            # int(min((params["max_nb"] + 1) / 2, 50)),
             name="large_emb",
         )(input_cat_layer)
         # x_layer = Reshape((input_num_dim, 1), name="reshape_cat_input")(
@@ -160,10 +168,21 @@ def build_model(
         concat = concats[0]
 
     # For now, output is only for binary classification
-    output = Dense(1, activation="sigmoid", name="output")(concat)
+    output = Dense(output_dim, activation=output_activation, name="output")(concat)
 
-    model = Model(inputs=inputs, outputs=[output], name="explainable_model",)
-    model.compile(loss="binary_crossentropy", optimizer=optimizer)
+    model = Model(
+        inputs=inputs,
+        outputs=[output],
+        name="explainable_model",
+    )
+    if output_dim == 2 or (output_dim == 1 and output_activation == "sigmoid"):
+        loss = "binary_crossentropy"
+    elif output_dim == 1:
+        loss = "mse"
+    else:
+        loss = "sparse_categorical_crossentropy"
+
+    model.compile(loss=loss, optimizer=optimizer)
 
     return model
 
@@ -201,7 +220,10 @@ def predict(model, input_model):
         shapes.append((nb_features, nb_channel))
         consumed += nb_weights
 
-    explainable_model = Model(inputs=[model.input], outputs=[model.output, *outputs],)
+    explainable_model = Model(
+        inputs=[model.input],
+        outputs=[model.output, *outputs],
+    )
 
     predictions = explainable_model.predict(input_model)
     probas = predictions[0]
@@ -263,7 +285,10 @@ def encode(model, input_model):
         shapes.append((nb_features, nb_channel))
         consumed += nb_weights
 
-    explainable_model = Model(inputs=[model.input], outputs=[model.output, *outputs],)
+    explainable_model = Model(
+        inputs=[model.input],
+        outputs=[model.output, *outputs],
+    )
 
     predictions = explainable_model.predict(input_model)
     probas = predictions[0]

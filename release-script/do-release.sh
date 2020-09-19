@@ -12,7 +12,7 @@ echo ${version} | grep v && echo "Version should be x.y.z (for example, 1.1.1, 2
 
 localDir=`readlink -f .`
 releaseDir="${localDir}/release-${version}"
-rm -rf ${releaseDir}
+sudo rm -rf ${releaseDir}
 mkdir ${releaseDir}
 cd $releaseDir
 
@@ -31,7 +31,7 @@ git tag v${version}
 echo "Building latest build"
 docker run --rm -v ${PWD}/xplainet:/work -w /work xplainet:latest poetry build
 
-echo "Merging into develop and master"
+echo "Merging into develop and main"
 git checkout master
 git merge --no-ff origin/release/${version} -m "chore: release v${version} (merge)"
 git checkout develop
@@ -39,7 +39,7 @@ git merge --no-ff origin/release/${version} -m "chore: release v${version} (merg
 
 echo "Pushing branch"
 git push origin develop
-git push origin master
+git push origin main
 echo "Pushing tag"
 git push origin --tags
 
@@ -58,4 +58,4 @@ git checkout develop
 git push origin :release/${version}
 
 cd ${localDir}
-rm -rf ${releaseDir}
+sudo rm -rf ${releaseDir}

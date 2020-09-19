@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xplainet"
-version = "0.1.0"
+version = "0.1.1"
 description = "Explainable Neural network in Keras"
 authors = ["Hartorn <hartorn.github@gmail.com>"]
 homepage = "https://github.com/Hartorn/XplaiNet"

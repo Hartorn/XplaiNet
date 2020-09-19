@@ -1,4 +1,4 @@
-FROM bazire/python:3.7-cpu
+FROM bazire/python:3.7-cpu@sha256:32968fbeb9099625200ebd13759b8e0f1d8560a6ac9f056f1085a0b7a18be3d0
 
 RUN apt update && apt install curl make git -y
 RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python

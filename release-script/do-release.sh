@@ -29,7 +29,7 @@ git tag v${version}
 
 # Build release
 echo "Building latest build"
-docker run --rm -v ${PWD}/XplaiNet:/work -w /work XplaiNet:latest poetry build
+docker run --rm -v ${PWD}/xplainet:/work -w /work xplainet:latest poetry build
 
 echo "Merging into develop and master"
 git checkout master
@@ -48,10 +48,10 @@ docker run -v ${PWD}:/work -w /work --entrypoint "" release-changelog:latest con
 
 # Build release
 echo "Building latest build"
-docker run --rm -v ${PWD}/XplaiNet:/work -w /work XplaiNet:latest poetry build
+docker run --rm -v ${PWD}/xplainet:/work -w /work xplainet:latest poetry build
 # Build release
 echo "Publishing latest build"
-docker run --rm -v ${PWD}/XplaiNet:/work -w /work XplaiNet:latest poetry publish -u ${pipyUser} -p ${pipyPassword}
+docker run --rm -v ${PWD}/xplainet:/work -w /work xplainet:latest poetry publish -u ${pipyUser} -p ${pipyPassword}
 
 echo "Deleting release branch"
 git checkout develop

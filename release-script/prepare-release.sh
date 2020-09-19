@@ -19,7 +19,7 @@ cd XplaiNet
 # Create release branch and push it
 git checkout -b release/${version}
 # Change version of package
-docker run --rm -v ${PWD}/XplaiNet:/work -w /work XplaiNet:latest poetry version ${version}
+docker run --rm -v ${PWD}/xplainet:/work -w /work xplainet:latest poetry version ${version}
 # Add modified file
 git add **/pyproject.toml
 # Commit release

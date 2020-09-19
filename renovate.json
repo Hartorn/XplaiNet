@@ -19,7 +19,8 @@
     "enabled": true,
     "fileMatch": [
       "Dockerfile",
-      "Dockerfile_gpu"
+      "Dockerfile_gpu",
+      "Dockerfile_changelog"
     ]
   },
   "major": {

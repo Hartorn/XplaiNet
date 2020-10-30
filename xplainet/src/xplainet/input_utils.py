@@ -35,6 +35,7 @@ def preproc_dataset(train_df, target=None, ids=None, params=None):
             set(
                 train_df.columns[
                    (n_unique > 2) & ((n_unique / train_df.shape[0]) >  0.05) & (train_df.dtypes != "object")
+                   #(train_df.dtypes != "object")
                 ].tolist()
             )
             - set(large_int.index[large_int.values].tolist())
@@ -51,7 +52,7 @@ def preproc_dataset(train_df, target=None, ids=None, params=None):
             - set(to_ignore)
         )
         params["cat_cols"] = cat_cols
-
+        params["cat_modalities"] = (n_unique[cat_cols] +1).tolist()
     # Let's handle numeric columns
     input_num_values = train_df[params["num_cols"]].values
     X_num_values = np.zeros(
@@ -79,7 +80,7 @@ def preproc_dataset(train_df, target=None, ids=None, params=None):
                                         strategy="constant", fill_value=fillna_values[i]
                                     ),
                                 ),
-                                # ("scaler", StandardScaler()),
+                                ("scaler", StandardScaler()),
                             ]
                         ),
                     ),
@@ -146,10 +147,10 @@ def preproc_dataset(train_df, target=None, ids=None, params=None):
     # )
     # X_cat_values = train_df[params["cat_cols"]].values.astype("str")
     input_cat_values = train_df[params["cat_cols"]].values.astype("str")
-    X_cat_values = np.zeros(
-        (input_cat_values.shape[0], input_cat_values.shape[1]), dtype="uint"
-    )
-
+    # X_cat_values = np.zeros(
+    #     (input_cat_values.shape[0], input_cat_values.shape[1]), dtype="uint"
+    # )
+    X_cat_values = []
     if "cat_encoder" not in params:
         #  Let's calculate fillna for num columns
         # fillna_values = (
@@ -166,11 +167,15 @@ def preproc_dataset(train_df, target=None, ids=None, params=None):
 
     for i, enc in enumerate(params["cat_encoder"]):
         # print(enc.transform(input_num_values[:, i].reshape(-1, 1)).reshape(-1, 4).shape)
-        X_cat_values[:, i : i + 1] = (
-            enc.transform(input_cat_values[:, i].reshape(-1))
+        X_cat_values.append(enc.transform(input_cat_values[:, i].reshape(-1))
             .reshape(-1, 1)
             .astype("uint")
         )
+        # X_cat_values[:, i : i + 1] = (
+        #     enc.transform(input_cat_values[:, i].reshape(-1))
+        #     .reshape(-1, 1)
+        #     .astype("uint")
+        # )
 
     X_bool_values = X_bool_values.astype("uint8")
 
@@ -180,6 +185,6 @@ def preproc_dataset(train_df, target=None, ids=None, params=None):
     if len(params["num_cols"]) > 0:
         to_return.append(X_num_values)
     if len(params["cat_cols"]) > 0:
-        to_return.append(X_cat_values)
+        to_return.extend(X_cat_values)
 
     return to_return, params

@@ -3,6 +3,8 @@ __MACOSX
 .Rhistory
 bank-additional*
 
+
+test_dir/
 .cache/
 ../.history/
 .history/

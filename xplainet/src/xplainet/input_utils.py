@@ -79,7 +79,7 @@ def preproc_dataset(train_df, target=None, ids=None, params=None):
                                         strategy="constant", fill_value=fillna_values[i]
                                     ),
                                 ),
-                                # ("scaler", StandardScaler()),
+                                ("scaler", StandardScaler()),
                             ]
                         ),
                     ),

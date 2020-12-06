@@ -156,7 +156,7 @@ def build_model(
         )
 
         nb_filters = lconv_dim[-1] if len(lconv_dim) > 0 else 1
-        x_layer = Reshape((input_cat_dim * nb_filters,), name="reshape_cat_output")(
+        x_layer = Reshape((-1,), name="reshape_cat_output")(
             x_layer
         )
 

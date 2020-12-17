@@ -1,4 +1,4 @@
-FROM node:15.3.0-alpine@sha256:98c899a40aed3f8bb1a042b45350aa873e533aef8f512d840e363326c2a184fc
+FROM node:15.4.0-alpine@sha256:83be366ba61d6bc68d0271d4e36562044087707cbe316e497f5170a31001aaa5
 
 RUN apk add git
 
